@@ -1,0 +1,65 @@
+pkgname=jonnystoten-base
+pkgver=2018.08.14
+pkgrel=1
+pkgdesc="Base system configuration for jonnystoten systems"
+arch=("any")
+license=('MIT')
+depends=(
+    'bash'
+    'bzip2'
+    'coreutils'
+    'cryptsetup'
+    'device-mapper'
+    'dhcpcd'
+    'diffutils'
+    'e2fsprogs'
+    'file'
+    'filesystem'
+    'findutils'
+    'gawk'
+    'gcc-libs'
+    'gettext'
+    'glibc'
+    'grep'
+    'gzip'
+    'inetutils'
+    'iproute2'
+    'iputils'
+    'jfsutils'
+    'less'
+    'licenses'
+    'linux'
+    'logrotate'
+    'lvm2'
+    'man-db'
+    'man-pages'
+    'mdadm'
+    'nano'
+    'netctl'
+    'pacman'
+    'pciutils'
+    'perl'
+    'procps-ng'
+    'psmisc'
+    'reiserfsprogs'
+    's-nail'
+    'sed'
+    'shadow'
+    'sudo'
+    'sysfsutils'
+    'systemd-sysvcompat'
+    'tar'
+    'texinfo'
+    'usbutils'
+    'util-linux'
+    'vim'
+    'which'
+    'xfsprogs'
+)
+
+source=('sudoers.wheel')
+md5sums=(SKIP)
+
+package() {
+  install -Dm 0640 sudoers.wheel "$pkgdir/etc/sudoers.d/wheel"
+}
