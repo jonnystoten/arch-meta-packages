@@ -1,5 +1,5 @@
 pkgname=jonnystoten-base
-pkgver=2018.08.14
+pkgver=2018.08.18
 pkgrel=1
 pkgdesc="Base system configuration for jonnystoten systems"
 arch=("any")

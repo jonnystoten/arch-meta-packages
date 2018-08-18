@@ -34,6 +34,8 @@ for package in $packages
   popd
 end
 
+repo-add $local_path/$repo_name.db.tar.xz $packages/*.pkg.tar.xz
+
 # Sync local db to remote
 s3cmd sync --follow-symlinks --acl-public \
   $packages/*.pkg.tar.xz \
