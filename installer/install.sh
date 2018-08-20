@@ -106,5 +106,10 @@ arch-chroot /mnt useradd -mU -s /usr/bin/fish -G wheel "$username"
 # TODO is this a good idea?
 arch-chroot /mnt chsh -s /usr/bin/fish
 
-echo "$username:$password" | chpasswd --root /mnt
-echo "root:$password" | chpasswd --root /mnt
+# TODO these invocations of chpasswd segfault
+#echo "$username:$password" | chpasswd --root /mnt
+#echo "root:$password" | chpasswd --root /mnt
+
+arch-chroot /mnt bash -c "echo $username:$password | chpasswd"
+arch-chroot /mnt bash -c "echo root:$password | chpasswd"
+
