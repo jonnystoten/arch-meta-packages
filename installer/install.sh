@@ -59,12 +59,52 @@ esac
 exec 1> >(tee stdout.log)
 exec 2> >(tee stderr.log)
 
-cat >>/etc/pacman.conf <<EOF
+cat >> /etc/pacman.conf <<EOF
 [jonnystoten]
 SigLevel = Optional TrustAll
 Server = $REPO_URL
 EOF
 
-pacstrap /mnt jonnystoten-base
+pacstrap /mnt jonnystoten-base intel-ucode
 genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
 echo "$hostname" > /mnt/etc/hostname
+
+cat >> /mnt/etc/pacman.conf <<EOF
+[jonnystoten]
+SigLevel = Optional TrustAll
+Server = $REPO_URL
+EOF
+
+arch-chroot /mnt bootctl install
+
+cat > /mnt/boot/loader/loader.conf <<EOF
+default arch
+EOF
+
+part_root=$(df -P / | tail -1 | awk '{print $1}')
+
+cat > /mnt/boot/loader/entries/arch.conf <<EOF
+title   Arch Linux
+linux   /vmlinuz-linux
+initrd  /intel-ucode.img
+initrd  /initramfs-linux.img
+options root=PARTUUID=$(blkid -s PARTUUID -o value "$part_root") rw
+EOF
+
+arch-chroot /mnt ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
+
+cat > /mnt/etc/locale.gen <<EOF
+en_US.UTF-8 UTF-8
+en_GB.UTF-8 UTF-8
+EOF
+
+arch-chroot /mnt locale-gen
+
+echo "LANG=en_GB.UTF-8" > /mnt/etc/locale.conf
+
+arch-chroot /mnt useradd -mU -s /usr/bin/fish -G wheel "$user"
+# TODO is this a good idea?
+arch-chroot /mnt chsh -s /usr/bin/fish
+
+echo "$user:$password" | chpasswd --root /mnt
+echo "root:$password" | chpasswd --root /mnt
