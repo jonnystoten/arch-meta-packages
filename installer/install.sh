@@ -102,9 +102,9 @@ arch-chroot /mnt locale-gen
 
 echo "LANG=en_GB.UTF-8" > /mnt/etc/locale.conf
 
-arch-chroot /mnt useradd -mU -s /usr/bin/fish -G wheel "$user"
+arch-chroot /mnt useradd -mU -s /usr/bin/fish -G wheel "$username"
 # TODO is this a good idea?
 arch-chroot /mnt chsh -s /usr/bin/fish
 
-echo "$user:$password" | chpasswd --root /mnt
+echo "$username:$password" | chpasswd --root /mnt
 echo "root:$password" | chpasswd --root /mnt
