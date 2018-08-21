@@ -18,6 +18,8 @@ if not test -d $chroot/root
   mkarchroot -C /etc/pacman.conf $chroot/root base base-devel
 end
 
+arch-nspawn $chroot/root pacman -Syu
+
 # Sync remote db to local
 s3cmd sync $remote_path/$repo_name.{db,files}.tar.xz $local_path/
 ln -sf $repo_name.db.tar.xz $local_path/$repo_name.db
