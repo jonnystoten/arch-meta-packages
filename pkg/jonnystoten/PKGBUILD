@@ -1,66 +1,37 @@
-pkgname=jonnystoten-base
-pkgver=2018.08.20
+pkgbase=jonnystoten
+pkgname=(jonnystoten-base jonnystoten-devel)
+pkgver=2018.08.21
 pkgrel=1
 pkgdesc="Base system configuration for jonnystoten systems"
-arch=("any")
-license=('MIT')
-depends=(
-    'bash'
-    'bzip2'
-    'coreutils'
-    'cryptsetup'
-    'device-mapper'
-    'dhcpcd'
-    'diffutils'
-    'e2fsprogs'
-    'file'
-    'filesystem'
-    'findutils'
-    'fish'
-    'gawk'
-    'gcc-libs'
-    'gettext'
-    'glibc'
-    'grep'
-    'gzip'
-    'inetutils'
-    'iproute2'
-    'iputils'
-    'jfsutils'
-    'less'
-    'licenses'
-    'linux'
-    'logrotate'
-    'lvm2'
-    'man-db'
-    'man-pages'
-    'mdadm'
-    'nano'
-    'netctl'
-    'pacman'
-    'pciutils'
-    'perl'
-    'procps-ng'
-    'psmisc'
-    'reiserfsprogs'
-    's-nail'
-    'sed'
-    'shadow'
-    'sudo'
-    'sysfsutils'
-    'systemd-sysvcompat'
-    'tar'
-    'texinfo'
-    'usbutils'
-    'util-linux'
-    'vim'
-    'which'
-    'xfsprogs'
-)
+arch=(any)
+license=(MIT)
 
 source=('sudoers.wheel')
 md5sums=(SKIP)
 
-package() {
+package_jonnystoten-base() {
+  depends=(bash bzip2 coreutils cryptsetup device-mapper dhcpcd diffutils
+      e2fsprogs file filesystem findutils gawk gcc-libs gettext glibc grep gzip
+      inetutils iproute2 iputils jfsutils less licenses linux logrotate lvm2 man-db
+      man-pages mdadm netctl pacman pciutils perl procps-ng psmisc reiserfsprogs
+      s-nail sed shadow sysfsutils systemd-sysvcompat tar texinfo usbutils
+      util-linux vim which xfsprogs)
+  # removed from base: nano, vi
+
+  depends+=(sudo unzip dialog htop wpa_supplicant openssh)
+
   install -Dm 0640 sudoers.wheel "$pkgdir/etc/sudoers.d/wheel"
+
+  depends+=(fish)
+}
+
+package_jonnystoten-devel() {
+  depends=(jonnystoten-base)
+
+  # Base Group
+  depends+=(autoconf automake binutils bison fakeroot file findutils flex
+      gawk gcc gettext grep groff gzip libtool m4 make pacman patch pkg-config
+      sed sudo systemd texinfo util-linux which)
+
+  depends+=(git cmake jq)
 }
