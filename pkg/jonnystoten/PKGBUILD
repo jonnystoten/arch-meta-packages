@@ -1,6 +1,6 @@
 pkgbase=jonnystoten
 pkgname=(jonnystoten-base jonnystoten-devel)
-pkgver=2018.08.21
+pkgver=2018.10.28
 pkgrel=1
 pkgdesc="Base system configuration for jonnystoten systems"
 arch=(any)
