@@ -1,7 +1,7 @@
 pkgbase=jonnystoten
 pkgname=(jonnystoten-base jonnystoten-devel jonnystoten-x jonnystoten-grayson)
 pkgver=2019.05.27
-pkgrel=1
+pkgrel=2
 pkgdesc="Base system configuration for jonnystoten systems"
 arch=(any)
 license=(MIT)
@@ -17,14 +17,14 @@ package_jonnystoten-base() {
       inetutils iproute2 iputils jfsutils less licenses linux logrotate lvm2 man-db
       man-pages mdadm netctl pacman pciutils perl procps-ng psmisc reiserfsprogs
       s-nail sed shadow sysfsutils systemd-sysvcompat tar texinfo usbutils
-      util-linux vim which xfsprogs)
+      util-linux which xfsprogs)
   # removed from base: nano, vi
 
   depends+=(sudo unzip dialog htop wpa_supplicant openssh)
 
   install -Dm 0640 sudoers.wheel "$pkgdir/etc/sudoers.d/wheel"
 
-  depends+=(fish)
+  depends+=(fish stow vim)
   
   install -dm 0755 "${pkgdir}/usr/bin"
   ln -s /usr/bin/vim "${pkgdir}/usr/bin/vi"
@@ -36,9 +36,9 @@ package_jonnystoten-devel() {
   # Base Group
   depends+=(autoconf automake binutils bison fakeroot file findutils flex
       gawk gcc gettext grep groff gzip libtool m4 make pacman patch pkg-config
-      sed sudo systemd texinfo util-linux which)
+      s3cmd sed sudo systemd texinfo util-linux which)
 
-  depends+=(git)
+  depends+=(git diff-so-fancy)
 }
 
 package_jonnystoten-x() {
