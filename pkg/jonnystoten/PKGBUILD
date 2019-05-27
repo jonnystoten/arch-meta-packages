@@ -1,7 +1,7 @@
 pkgbase=jonnystoten
 pkgname=(jonnystoten-base jonnystoten-devel jonnystoten-x jonnystoten-grayson)
 pkgver=2019.05.27
-pkgrel=2
+pkgrel=3
 pkgdesc="Base system configuration for jonnystoten systems"
 arch=(any)
 license=(MIT)
@@ -34,7 +34,7 @@ package_jonnystoten-devel() {
   depends=(jonnystoten-base)
 
   # Base Group
-  depends+=(autoconf automake binutils bison fakeroot file findutils flex
+  depends+=(autoconf automake binutils bison devtools fakeroot file findutils flex
       gawk gcc gettext grep groff gzip libtool m4 make pacman patch pkg-config
       s3cmd sed sudo systemd texinfo util-linux which)
 
@@ -44,7 +44,7 @@ package_jonnystoten-devel() {
 package_jonnystoten-x() {
   depends=(jonnystoten-base)
 
-  depends+=(xorg-server i3-wm polybar firefox kitty)
+  depends+=(xorg-server xorg-xinit i3-gaps polybar firefox kitty)
 }
 
 package_jonnystoten-grayson() {
