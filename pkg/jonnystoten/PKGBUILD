@@ -1,6 +1,6 @@
 pkgbase=jonnystoten
-pkgname=(jonnystoten-base jonnystoten-devel)
-pkgver=2018.10.28
+pkgname=(jonnystoten-base jonnystoten-devel jonnystoten-x jonnystoten-grayson)
+pkgver=2019.05.27
 pkgrel=1
 pkgdesc="Base system configuration for jonnystoten systems"
 arch=(any)
@@ -10,6 +10,8 @@ source=('sudoers.wheel')
 md5sums=(SKIP)
 
 package_jonnystoten-base() {
+  provides=(vi)
+  conflicts=(vi)
   depends=(bash bzip2 coreutils cryptsetup device-mapper dhcpcd diffutils
       e2fsprogs file filesystem findutils gawk gcc-libs gettext glibc grep gzip
       inetutils iproute2 iputils jfsutils less licenses linux logrotate lvm2 man-db
@@ -23,6 +25,9 @@ package_jonnystoten-base() {
   install -Dm 0640 sudoers.wheel "$pkgdir/etc/sudoers.d/wheel"
 
   depends+=(fish)
+  
+  install -dm 0755 "${pkgdir}/usr/bin"
+  ln -s /usr/bin/vim "${pkgdir}/usr/bin/vi"
 }
 
 package_jonnystoten-devel() {
@@ -33,5 +38,17 @@ package_jonnystoten-devel() {
       gawk gcc gettext grep groff gzip libtool m4 make pacman patch pkg-config
       sed sudo systemd texinfo util-linux which)
 
-  depends+=(git cmake jq)
+  depends+=(git)
+}
+
+package_jonnystoten-x() {
+  depends=(jonnystoten-base)
+
+  depends+=(xorg-server i3-wm polybar firefox kitty)
+}
+
+package_jonnystoten-grayson() {
+  depends=(jonnystoten-x)
+  
+  depends+=(nvidia nvidia-utils ntfs-3g)
 }
