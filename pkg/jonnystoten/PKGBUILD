@@ -1,7 +1,7 @@
 pkgbase=jonnystoten
 pkgname=(jonnystoten-base jonnystoten-devel jonnystoten-x jonnystoten-grayson)
 pkgver=2019.05.27
-pkgrel=3
+pkgrel=5
 pkgdesc="Base system configuration for jonnystoten systems"
 arch=(any)
 license=(MIT)
@@ -38,13 +38,17 @@ package_jonnystoten-devel() {
       gawk gcc gettext grep groff gzip libtool m4 make pacman patch pkg-config
       s3cmd sed sudo systemd texinfo util-linux which)
 
-  depends+=(git diff-so-fancy)
+  depends+=(git hub diff-so-fancy)
 }
 
 package_jonnystoten-x() {
   depends=(jonnystoten-base)
 
   depends+=(xorg-server xorg-xinit i3-gaps polybar firefox kitty)
+
+  # Fonts
+  depends+=(ttf-fira-sans ttf-fira-mono ttf-fira-code ttf-font-awesome
+      ttf-roboto ttf-roboto-slab ttf-symbola ttf-unifont noto-fonts-emoji)
 }
 
 package_jonnystoten-grayson() {
