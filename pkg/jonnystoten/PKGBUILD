@@ -1,13 +1,13 @@
 pkgbase=jonnystoten
 pkgname=(jonnystoten-base jonnystoten-devel jonnystoten-x jonnystoten-grayson)
 pkgver=2019.05.27
-pkgrel=5
+pkgrel=7
 pkgdesc="Base system configuration for jonnystoten systems"
 arch=(any)
 license=(MIT)
 
-source=('sudoers.wheel')
-md5sums=(SKIP)
+source=('sudoers.wheel' 'fonts.local.conf')
+md5sums=(SKIP SKIP)
 
 package_jonnystoten-base() {
   provides=(vi)
@@ -25,7 +25,7 @@ package_jonnystoten-base() {
   install -Dm 0640 sudoers.wheel "$pkgdir/etc/sudoers.d/wheel"
 
   depends+=(fish stow vim)
-  
+
   install -dm 0755 "${pkgdir}/usr/bin"
   ln -s /usr/bin/vim "${pkgdir}/usr/bin/vi"
 }
@@ -44,15 +44,17 @@ package_jonnystoten-devel() {
 package_jonnystoten-x() {
   depends=(jonnystoten-base)
 
-  depends+=(xorg-server xorg-xinit i3-gaps polybar firefox kitty)
+  depends+=(xorg-server xorg-xinit i3-gaps polybar jsoncpp firefox kitty)
 
   # Fonts
   depends+=(ttf-fira-sans ttf-fira-mono ttf-fira-code ttf-font-awesome
       ttf-roboto ttf-roboto-slab ttf-symbola ttf-unifont noto-fonts-emoji)
+
+  install -Dm 0644 fonts.local.conf "$pkgdir/etc/fonts/local.conf"
 }
 
 package_jonnystoten-grayson() {
   depends=(jonnystoten-x)
-  
+
   depends+=(nvidia nvidia-utils ntfs-3g)
 }
