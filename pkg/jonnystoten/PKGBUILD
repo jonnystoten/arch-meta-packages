@@ -75,7 +75,7 @@ package_jonnystoten-grayson() {
 package_jonnystoten-drake() {
   depends=(jonnystoten-x jonnystoten-devel)
 
-  depends+=(intel-ucode)
+  depends+=(intel-ucode throttled)
 
   depends+=(terminus-font)
 }
