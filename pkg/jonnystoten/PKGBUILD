@@ -1,7 +1,7 @@
 pkgbase=jonnystoten
-pkgname=(jonnystoten-base jonnystoten-devel jonnystoten-x jonnystoten-grayson)
-pkgver=2019.05.27
-pkgrel=7
+pkgname=(jonnystoten-base jonnystoten-devel jonnystoten-x jonnystoten-grayson jonnystoten-drake)
+pkgver=2019.06.09
+pkgrel=1
 pkgdesc="Base system configuration for jonnystoten systems"
 arch=(any)
 license=(MIT)
@@ -31,6 +31,7 @@ package_jonnystoten-base() {
 }
 
 package_jonnystoten-devel() {
+  install=jonnystoten-devel.install
   depends=(jonnystoten-base)
 
   # Base Group
@@ -39,16 +40,28 @@ package_jonnystoten-devel() {
       s3cmd sed sudo systemd texinfo util-linux which)
 
   depends+=(git hub diff-so-fancy)
+
+  depends+=(docker docker-compose)
+
+  depends+=(inotify-tools)
+
+  depends+=(rustup)
+
+  depends+=(visual-studio-code-bin)
 }
 
 package_jonnystoten-x() {
   depends=(jonnystoten-base)
 
-  depends+=(xorg-server xorg-xinit i3-gaps polybar jsoncpp firefox kitty)
+  depends+=(xorg-server xorg-xinit i3-gaps polybar jsoncpp firefox kitty
+      redshift python-gobject python-xdg)
+
+  depends+=(pulseaudio pavucontrol spotify-stable mpv youtube-dl)
 
   # Fonts
   depends+=(ttf-fira-sans ttf-fira-mono ttf-fira-code ttf-font-awesome
-      ttf-roboto ttf-roboto-slab ttf-symbola ttf-unifont noto-fonts-emoji)
+      ttf-roboto ttf-roboto-slab ttf-symbola ttf-unifont noto-fonts-emoji
+      siji-git)
 
   install -Dm 0644 fonts.local.conf "$pkgdir/etc/fonts/local.conf"
 }
@@ -57,4 +70,12 @@ package_jonnystoten-grayson() {
   depends=(jonnystoten-x)
 
   depends+=(nvidia nvidia-utils ntfs-3g)
+}
+
+package_jonnystoten-drake() {
+  depends=(jonnystoten-x jonnystoten-devel)
+
+  depends+=(intel-ucode)
+
+  depends+=(terminus-font)
 }
